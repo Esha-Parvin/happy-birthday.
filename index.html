@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, Soha!</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ff9a9e, #fecfef);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            color: #333;
+            overflow: auto;
+            flex-direction: column;
+        }
+
+        .birthday-card {
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            margin-top: 20px;
+        }
+
+        .birthday-card h1 {
+            color: #e91e63;
+            font-size: 2.5em;
+            animation: wishing 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes wishing {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.1); opacity: 1; }
+        }
+
+        .birthday-card img {
+            max-width: 100%;
+            height: 300px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        #surpriseButton {
+            background-color: #ffc107;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 1.1em;
+        }
+
+        #photoGrid {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 10;
+        }
+
+        .photo-container {
+            width: 250px;
+            height: 250px;
+            position: relative;
+        }
+
+        #photoGrid img {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 50%;
+            position: absolute;
+            opacity: 0;
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+            left: -15px;
+        }
+
+        #closeButton {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #e91e63;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="birthday-card">
+        <h1>Happy Birthday, Soha!</h1>
+        <img src="photo 11.jpg" alt="Soha's Birthday Photo">
+        <p>Wishing you a wonderful day filled with love, laughter, and happiness! 🎈💖</p>
+        <p>Enjoy your special day! ❤️🎂</p>
+        <button id="surpriseButton">Surprise!</button>
+    </div>
+
+    <div id="photoGrid">
+        <button id="closeButton">X</button>
+        <audio id="birthdayMusic" loop>
+            <source src="music.mp3" type="audio/mp3">
+        </audio>
+        <div class="photo-container">
+            <img src="photo 1.jpg" class="slideshow" alt="Photo 1">
+            <img src="photo 2.jpg" class="slideshow" alt="Photo 2">
+            <img src="photo 3.jpg" class="slideshow" alt="Photo 3">
+            <img src="photo 4.jpg" class="slideshow" alt="Photo 4">
+            <img src="photo 5.jpg" class="slideshow" alt="Photo 5">
+            <img src="photo 6.jpg" class="slideshow" alt="Sister Photo 6">
+            <img src="photo 7.jpg" class="slideshow" alt="Sister Photo 7">
+            <img src="photo 8.jpg" class="slideshow" alt="Sister Photo 8">
+            <img src="photo 9.jpg" class="slideshow" alt="Sister Photo 9">
+            <img src="photo 10.jpg" class="slideshow" alt="Sister Photo 10">
+        </div>
+    </div>
+
+    <script>
+        const surpriseButton = document.getElementById('surpriseButton');
+        const photoGrid = document.getElementById('photoGrid');
+        const closeButton = document.getElementById('closeButton');
+        const slides = document.querySelectorAll('.slideshow');
+        const music = document.getElementById('birthdayMusic');
+        let currentSlide = 0;
+        let interval;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.style.opacity = i === index ? "1" : "0";
+                slide.style.transform = i === index ? "scale(1.1)" : "scale(1)";
+            });
+        }
+
+        function startSlideshow() {
+            music.play();
+            showSlide(currentSlide);
+            interval = setInterval(() => {
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+            }, 2500);
+        }
+
+        surpriseButton.addEventListener('click', () => {
+            photoGrid.style.display = 'flex';
+            startSlideshow();
+        });
+
+        closeButton.addEventListener('click', () => {
+            photoGrid.style.display = 'none';
+            clearInterval(interval);
+            music.pause();
+            music.currentTime = 0;
+        });
+    </script>
+</body>
+</html>
